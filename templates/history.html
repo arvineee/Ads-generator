@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ad History</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">📜 Generated Ads History</h1>
+    <a href="{{ url_for('index') }}" class="btn btn-primary mb-3">⬅ Back to Generator</a>
+
+    {% if ads %}
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Platform</th>
+                <th>Ad Text</th>
+                <th>Hashtags</th>
+                <th>Update Hashtags</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ad in ads %}
+            <tr>
+                <td>{{ ad.title }}</td>
+                <td>{{ ad.platform }}</td>
+                <td><pre>{{ ad.ad_text }}</pre></td>
+                <td>{{ ad.hashtags }}</td>
+                <td>
+                    <form method="POST">
+                        <input type="hidden" name="ad_id" value="{{ ad.id }}">
+                        <input type="text" name="hashtags" value="{{ ad.hashtags }}" class="form-control mb-1">
+                        <button type="submit" class="btn btn-sm btn-success w-100">Update</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>No ads generated yet.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>

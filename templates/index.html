@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog Ad Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">📝 Blog Ad Generator</h1>
+    
+    <form method="POST" class="card p-4 shadow">
+        <div class="mb-3">
+            <label class="form-label">Blog Title</label>
+            <input type="text" name="title" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Blog Description</label>
+            <textarea name="description" class="form-control" rows="3" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Target Platform</label>
+            <select name="platform" class="form-select">
+                <option value="general">General</option>
+                <option value="twitter">Twitter</option>
+                <option value="whatsapp">WhatsApp</option>
+                <option value="facebook">Facebook</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Hashtags (optional, space separated)</label>
+            <input type="text" name="hashtags" class="form-control" placeholder="#Tech #Blog">
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Generate Ad</button>
+    </form>
+
+    {% if ad %}
+    <div class="card mt-4 shadow p-3">
+        <h5>✨ Your Generated Ad:</h5>
+        <pre id="adText">{{ ad }}</pre>
+        <button class="btn btn-success mt-2" onclick="copyAd()">📋 Copy Ad</button>
+    </div>
+    {% endif %}
+
+    <div class="text-center mt-3">
+        <a href="{{ url_for('history') }}" class="btn btn-outline-secondary">📜 View History</a>
+    </div>
+</div>
+
+<script>
+function copyAd() {
+    const adText = document.getElementById("adText").innerText;
+    navigator.clipboard.writeText(adText).then(() => {
+        alert("✅ Ad copied to clipboard!");
+    }).catch(err => {
+        alert("❌ Failed to copy ad: " + err);
+    });
+}
+</script>
+
+</body>
+</html>
